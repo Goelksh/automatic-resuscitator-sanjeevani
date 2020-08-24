@@ -34,10 +34,10 @@ let emergencyStop = 0
 basic.showIcon(IconNames.Heart)
 emergencyStop = 0
 breatheInTime = 2.2
-breatheOutTime = 1.1
+breatheOutTime = 1
 breatheInSpeed = 30
 breatheOutSpeed = 30
-beatheInHold = 1
+beatheInHold = 1.8
 breatheOutHold = 1
 basic.pause(500)
 basic.clearScreen()

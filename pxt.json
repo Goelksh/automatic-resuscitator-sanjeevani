@@ -1,0 +1,22 @@
+{
+    "name": "Automatc Resuscitator (sanjivani)",
+    "description": "",
+    "dependencies": {
+        "core": "*",
+        "radio": "*",
+        "ContinuousServo": "github:tinkertanker/pxt-continuous-servo#v0.0.6",
+        "servo": "*"
+    },
+    "files": [
+        "main.blocks",
+        "main.ts",
+        "README.md"
+    ],
+    "testFiles": [
+        "test.ts"
+    ],
+    "supportedTargets": [
+        "microbit"
+    ],
+    "preferredEditor": "blocksprj"
+}

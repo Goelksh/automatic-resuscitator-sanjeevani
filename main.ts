@@ -33,6 +33,7 @@ let breatheInTime = 0
 let emergencyStop = 0
 basic.showIcon(IconNames.Heart)
 emergencyStop = 0
+let setupMode = 0
 breatheInTime = 2.2
 breatheOutTime = 1
 breatheInSpeed = 30

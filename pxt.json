@@ -3,9 +3,10 @@
     "description": "",
     "dependencies": {
         "core": "*",
-        "radio": "*",
         "ContinuousServo": "github:tinkertanker/pxt-continuous-servo#v0.0.6",
-        "servo": "*"
+        "servo": "*",
+        "gatorEnvironment": "github:sparkfun/pxt-gator-environment#v1.0.13",
+        "Andee": "github:annikken/pxt-andee#v1.0.5"
     },
     "files": [
         "main.blocks",

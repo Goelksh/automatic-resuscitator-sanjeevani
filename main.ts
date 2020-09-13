@@ -11,10 +11,11 @@ function breatheCycle () {
 }
 input.onButtonPressed(Button.A, function () {
     if (setupMode == 0) {
+        emergencyStop = 0
         basic.showIcon(IconNames.Yes)
         basic.pause(100)
         basic.clearScreen()
-        for (let index = 0; index < 10; index++) {
+        for (let index = 0; index < breatheCycles; index++) {
             if (emergencyStop == 0) {
                 breatheCycle()
             } else {
@@ -24,8 +25,19 @@ input.onButtonPressed(Button.A, function () {
     }
 })
 input.onButtonPressed(Button.AB, function () {
-    setupMode = 1
-    setup()
+    if (setupMode == 0) {
+        setupMode = 1
+        basic.showIcon(IconNames.Square)
+        basic.showIcon(IconNames.SmallSquare)
+        basic.showIcon(IconNames.SmallDiamond)
+        basic.clearScreen()
+    } else {
+        setupMode = 0
+        basic.showIcon(IconNames.SmallDiamond)
+        basic.showIcon(IconNames.SmallSquare)
+        basic.showIcon(IconNames.Square)
+        basic.clearScreen()
+    }
 })
 function beatingHeart () {
     basic.showIcon(IconNames.Heart)
@@ -47,17 +59,12 @@ function beatingHeart () {
 input.onButtonPressed(Button.B, function () {
     if (setupMode == 0) {
         emergencyStop = 1
+        basic.showIcon(IconNames.No)
+        basic.pause(100)
+        basic.clearScreen()
     }
 })
-function setup () {
-    basic.showIcon(IconNames.Square)
-    basic.showIcon(IconNames.SmallSquare)
-    basic.showIcon(IconNames.SmallDiamond)
-    basic.clearScreen()
-    if (input.buttonIsPressed(Button.AB)) {
-        setupMode = 0
-    }
-}
+let breatheCycles = 0
 let breatheOutHold = 0
 let beatheInHold = 0
 let breatheOutSpeed = 0
@@ -69,11 +76,12 @@ let emergencyStop = 0
 beatingHeart()
 emergencyStop = 0
 setupMode = 0
-breatheInTime = 2.2
+breatheInTime = 2
 breatheOutTime = 1
-breatheInSpeed = 30
-breatheOutSpeed = 30
+breatheInSpeed = 100
+breatheOutSpeed = 10
 beatheInHold = 1.8
 breatheOutHold = 1
+breatheCycles = 2
 basic.pause(500)
 basic.clearScreen()

@@ -14,6 +14,8 @@ function variableSetupForWithoutBag () {
     breatheOutTime = 1.5
     breatheInSpeed = 20
     breatheOutSpeed = 20
+    beatheInHold = 1
+    breatheOutHold = 0
     breatheCycles = 5
 }
 function variableSetupForPressureTest () {
@@ -21,6 +23,8 @@ function variableSetupForPressureTest () {
     breatheOutTime = 1
     breatheInSpeed = 50
     breatheOutSpeed = 20
+    beatheInHold = 2
+    breatheOutHold = 0
     breatheCycles = 3
 }
 input.onButtonPressed(Button.A, function () {
@@ -48,6 +52,8 @@ function variableSetupForStandard () {
     breatheOutTime = 1.2
     breatheInSpeed = 35
     breatheOutSpeed = 20
+    beatheInHold = calculateHoldInTime()
+    breatheOutHold = 0
     breatheCycles = 30
 }
 function variableSetupForWithBagNoLoad () {
@@ -56,6 +62,8 @@ function variableSetupForWithBagNoLoad () {
     breatheInSpeed = 35
     breatheOutSpeed = 20
     breatheCycles = 5
+    beatheInHold = 1
+    breatheOutHold = 0
 }
 input.onButtonPressed(Button.AB, function () {
     if (flagSetupMode == 0) {
@@ -93,24 +101,24 @@ function variableSetupForVolumeTest () {
     breatheOutTime = 1.6
     breatheInSpeed = 35
     breatheOutSpeed = 20
+    beatheInHold = 0.2
+    breatheOutHold = 0
     breatheCycles = 9
 }
 let OneBreathTime = 0
 let time_in_plus_out = 0
 let breatheCycles = 0
+let breatheOutHold = 0
 let breatheOutTime = 0
 let breatheOutSpeed = 0
+let beatheInHold = 0
 let breatheInTime = 0
 let breatheInSpeed = 0
-let breatheOutHold = 0
-let beatheInHold = 0
 let BreathPerMin = 0
 let flagSetupMode = 0
 let flagEmergencyStop = 0
 flagEmergencyStop = 0
 flagSetupMode = 0
 BreathPerMin = 10
-variableSetupForStandard()
-beatheInHold = calculateHoldInTime()
-breatheOutHold = 0
 beatingHeart(3)
+variableSetupForStandard()

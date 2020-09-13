@@ -76,10 +76,10 @@ let emergencyStop = 0
 beatingHeart()
 emergencyStop = 0
 setupMode = 0
-breatheInTime = 2
+breatheInTime = 3
 breatheOutTime = 1
-breatheInSpeed = 100
-breatheOutSpeed = 10
+breatheInSpeed = 50
+breatheOutSpeed = 30
 beatheInHold = 1.8
 breatheOutHold = 1
 breatheCycles = 2

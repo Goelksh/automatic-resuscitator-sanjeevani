@@ -49,7 +49,7 @@ function calculateHoldInTime () {
 }
 function variableSetupForStandard () {
     breatheInTime = 1.7
-    breatheOutTime = 1.2
+    breatheOutTime = 1.6
     breatheInSpeed = 35
     breatheOutSpeed = 20
     beatheInHold = calculateHoldInTime()

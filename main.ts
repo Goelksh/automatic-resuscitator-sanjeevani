@@ -9,14 +9,28 @@ function breatheCycle () {
     ContinuousServo.turn_off_motor(DigitalPin.P0)
     basic.pause(breatheOutHold * 1000)
 }
+function variableSetupForWithoutBag () {
+    breatheInTime = 1
+    breatheOutTime = 1.5
+    breatheInSpeed = 20
+    breatheOutSpeed = 20
+    breatheCycles = 5
+}
+function variableSetupForPressureTest () {
+    breatheInTime = 2
+    breatheOutTime = 1
+    breatheInSpeed = 50
+    breatheOutSpeed = 20
+    breatheCycles = 3
+}
 input.onButtonPressed(Button.A, function () {
-    if (setupMode == 0) {
-        emergencyStop = 0
+    if (flagSetupMode == 0) {
+        flagEmergencyStop = 0
         basic.showIcon(IconNames.Yes)
         basic.pause(100)
         basic.clearScreen()
         for (let index = 0; index < breatheCycles; index++) {
-            if (emergencyStop == 0) {
+            if (flagEmergencyStop == 0) {
                 breatheCycle()
             } else {
                 break;
@@ -24,64 +38,79 @@ input.onButtonPressed(Button.A, function () {
         }
     }
 })
+function calculateHoldInTime () {
+    time_in_plus_out = breatheInTime + breatheOutTime
+    OneBreathTime = 60 / BreathPerMin
+    return breatheInTime + time_in_plus_out
+}
+function variableSetupForStandard () {
+    breatheInTime = 1.7
+    breatheOutTime = 1.2
+    breatheInSpeed = 35
+    breatheOutSpeed = 20
+    breatheCycles = 30
+}
+function variableSetupForWithBagNoLoad () {
+    breatheInTime = 1.7
+    breatheOutTime = 1.6
+    breatheInSpeed = 35
+    breatheOutSpeed = 20
+    breatheCycles = 5
+}
 input.onButtonPressed(Button.AB, function () {
-    if (setupMode == 0) {
-        setupMode = 1
+    if (flagSetupMode == 0) {
+        flagSetupMode = 1
         basic.showIcon(IconNames.Square)
         basic.showIcon(IconNames.SmallSquare)
         basic.showIcon(IconNames.SmallDiamond)
         basic.clearScreen()
     } else {
-        setupMode = 0
+        flagSetupMode = 0
         basic.showIcon(IconNames.SmallDiamond)
         basic.showIcon(IconNames.SmallSquare)
         basic.showIcon(IconNames.Square)
         basic.clearScreen()
     }
 })
-function beatingHeart () {
-    basic.showIcon(IconNames.Heart)
-    basic.pause(100)
-    basic.clearScreen()
-    basic.pause(100)
-    basic.showIcon(IconNames.Heart)
-    basic.pause(100)
-    basic.clearScreen()
-    basic.pause(100)
-    basic.showIcon(IconNames.Heart)
-    basic.pause(100)
-    basic.clearScreen()
-    basic.pause(100)
-    basic.showIcon(IconNames.Heart)
-    basic.pause(100)
-    basic.clearScreen()
+function beatingHeart (num: number) {
+    for (let index = 0; index < num; index++) {
+        basic.showIcon(IconNames.Heart)
+        basic.pause(100)
+        basic.clearScreen()
+        basic.pause(100)
+    }
 }
 input.onButtonPressed(Button.B, function () {
-    if (setupMode == 0) {
-        emergencyStop = 1
+    if (flagSetupMode == 0) {
+        flagEmergencyStop = 1
         basic.showIcon(IconNames.No)
         basic.pause(100)
         basic.clearScreen()
     }
 })
+function variableSetupForVolumeTest () {
+    breatheInTime = 1.7
+    breatheOutTime = 1.6
+    breatheInSpeed = 35
+    breatheOutSpeed = 20
+    breatheCycles = 9
+}
+let OneBreathTime = 0
+let time_in_plus_out = 0
 let breatheCycles = 0
+let breatheOutTime = 0
+let breatheOutSpeed = 0
+let breatheInTime = 0
+let breatheInSpeed = 0
 let breatheOutHold = 0
 let beatheInHold = 0
-let breatheOutSpeed = 0
-let breatheInSpeed = 0
-let breatheOutTime = 0
-let breatheInTime = 0
-let setupMode = 0
-let emergencyStop = 0
-beatingHeart()
-emergencyStop = 0
-setupMode = 0
-breatheInTime = 3
-breatheOutTime = 1
-breatheInSpeed = 50
-breatheOutSpeed = 30
-beatheInHold = 1.8
-breatheOutHold = 1
-breatheCycles = 2
-basic.pause(500)
-basic.clearScreen()
+let BreathPerMin = 0
+let flagSetupMode = 0
+let flagEmergencyStop = 0
+flagEmergencyStop = 0
+flagSetupMode = 0
+BreathPerMin = 10
+variableSetupForStandard()
+beatheInHold = calculateHoldInTime()
+breatheOutHold = 0
+beatingHeart(3)

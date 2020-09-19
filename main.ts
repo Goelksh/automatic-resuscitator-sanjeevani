@@ -10,13 +10,40 @@ function breatheCycle () {
     basic.pause(breatheOutHold * 1000)
 }
 function variableSetupForWithoutBag () {
-    breatheInTime = 1
-    breatheOutTime = 1.5
+    breatheInTime = 1.2
+    breatheOutTime = 1.7
     breatheInSpeed = 20
     breatheOutSpeed = 20
     beatheInHold = 1
     breatheOutHold = 0
     breatheCycles = 5
+}
+function variableSetupFor130ml () {
+    breatheInTime = 1
+    breatheOutTime = 0.8
+    breatheInSpeed = 35
+    breatheOutSpeed = 20
+    beatheInHold = calculateHoldInTime()
+    breatheOutHold = 0
+    breatheCycles = 30
+}
+function variableSetupForVolumeTest_325ml_64volt () {
+    breatheInTime = 1.7
+    breatheOutTime = 1.3
+    breatheInSpeed = 35
+    breatheOutSpeed = 20
+    beatheInHold = 0
+    breatheOutHold = 0
+    breatheCycles = 8
+}
+function variableSetupForVolumeTest_260ml_55volt () {
+    breatheInTime = 1.9
+    breatheOutTime = 1.3
+    breatheInSpeed = 35
+    breatheOutSpeed = 20
+    beatheInHold = 0
+    breatheOutHold = 0
+    breatheCycles = 10
 }
 function variableSetupForPressureTest () {
     breatheInTime = 2
@@ -44,21 +71,12 @@ input.onButtonPressed(Button.A, function () {
 })
 function calculateHoldInTime () {
     time_in_plus_out = breatheInTime + breatheOutTime
-    OneBreathTime = 60 / BreathPerMin
-    return breatheInTime + time_in_plus_out
-}
-function variableSetupForStandard () {
-    breatheInTime = 1.7
-    breatheOutTime = 1.6
-    breatheInSpeed = 35
-    breatheOutSpeed = 20
-    beatheInHold = calculateHoldInTime()
-    breatheOutHold = 0
-    breatheCycles = 30
+    OneBreathTime = 60 / RR_BreathsPerMin
+    return OneBreathTime - time_in_plus_out
 }
 function variableSetupForWithBagNoLoad () {
     breatheInTime = 1.7
-    breatheOutTime = 1.6
+    breatheOutTime = 1.3
     breatheInSpeed = 35
     breatheOutSpeed = 20
     breatheCycles = 5
@@ -88,6 +106,15 @@ function beatingHeart (num: number) {
         basic.pause(100)
     }
 }
+function variableSetupFor260ml () {
+    breatheInTime = 1.9
+    breatheOutTime = 1.3
+    breatheInSpeed = 35
+    breatheOutSpeed = 20
+    beatheInHold = calculateHoldInTime()
+    breatheOutHold = 0
+    breatheCycles = 30
+}
 input.onButtonPressed(Button.B, function () {
     if (flagSetupMode == 0) {
         flagEmergencyStop = 1
@@ -96,14 +123,14 @@ input.onButtonPressed(Button.B, function () {
         basic.clearScreen()
     }
 })
-function variableSetupForVolumeTest () {
-    breatheInTime = 1.7
-    breatheOutTime = 1.6
+function variableSetupForVolumeTest_130ml_55volt () {
+    breatheInTime = 1
+    breatheOutTime = 0.8
     breatheInSpeed = 35
     breatheOutSpeed = 20
     beatheInHold = 0.2
     breatheOutHold = 0
-    breatheCycles = 9
+    breatheCycles = 20
 }
 let OneBreathTime = 0
 let time_in_plus_out = 0
@@ -114,11 +141,11 @@ let breatheOutSpeed = 0
 let beatheInHold = 0
 let breatheInTime = 0
 let breatheInSpeed = 0
-let BreathPerMin = 0
+let RR_BreathsPerMin = 0
 let flagSetupMode = 0
 let flagEmergencyStop = 0
 flagEmergencyStop = 0
 flagSetupMode = 0
-BreathPerMin = 10
+RR_BreathsPerMin = 20
 beatingHeart(3)
-variableSetupForStandard()
+variableSetupFor130ml()

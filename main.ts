@@ -25,7 +25,7 @@ function variableSetupFor130ml () {
     breatheOutTime = 0.8
     breatheInSpeed = 35
     breatheOutSpeed = 20
-    beatheInHold = calculateHoldInTime()
+    beatheInHold = 60 / RR_BreathsPerMin - (breatheInTime + breatheOutTime)
     breatheOutHold = 0
     breatheCycles = 30
 }
@@ -72,10 +72,6 @@ input.onButtonPressed(Button.A, function () {
         basic.showNumber(RR_BreathsPerMin)
     }
 })
-function calculateHoldInTime () {
-    OneBreathTime = 60 / RR_BreathsPerMin
-    return OneBreathTime - (breatheInTime + breatheOutTime)
-}
 // Perform test setup for tidal volume of 130ml with 5.5volt.
 function variableSetupForVolumeTest_130ml_55volt () {
     breatheInTime = 1
@@ -125,7 +121,7 @@ input.onButtonPressed(Button.AB, function () {
         basic.showIcon(IconNames.SmallSquare)
         basic.showIcon(IconNames.Square)
         basic.clearScreen()
-        basic.showString("Hin=" + beatheInHold)
+        basic.showString("Hin=" + Math.round(beatheInHold))
     }
 })
 // display a beating heart for number of times
@@ -143,7 +139,7 @@ function variableSetupFor260ml () {
     breatheOutTime = 1.3
     breatheInSpeed = 35
     breatheOutSpeed = 20
-    beatheInHold = calculateHoldInTime()
+    beatheInHold = 60 / RR_BreathsPerMin - (0 + breatheOutTime)
     breatheOutHold = 0
     breatheCycles = 30
 }
@@ -164,7 +160,6 @@ input.onButtonPressed(Button.B, function () {
         }
     }
 })
-let OneBreathTime = 0
 let breatheCycles = 0
 let breatheOutHold = 0
 let breatheOutTime = 0
@@ -176,6 +171,7 @@ let tidalVolume = 0
 let RR_BreathsPerMin = 0
 let flagSetupMode = 0
 let flagEmergencyStop = 0
+let OneBreathTime = 0
 flagEmergencyStop = 0
 flagSetupMode = 0
 RR_BreathsPerMin = 5

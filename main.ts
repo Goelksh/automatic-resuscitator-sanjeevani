@@ -9,6 +9,7 @@ function breatheCycle () {
     ContinuousServo.turn_off_motor(DigitalPin.P0)
     basic.pause(breatheOutHold * 1000)
 }
+// Perform test setup for servo and gears without bag.
 function variableSetupForWithoutBag () {
     breatheInTime = 1.2
     breatheOutTime = 1.7
@@ -18,6 +19,7 @@ function variableSetupForWithoutBag () {
     breatheOutHold = 0
     breatheCycles = 5
 }
+// Perform variable setup for tidal volume of 130ml.
 function variableSetupFor130ml () {
     breatheInTime = 1
     breatheOutTime = 0.8
@@ -27,6 +29,7 @@ function variableSetupFor130ml () {
     breatheOutHold = 0
     breatheCycles = 30
 }
+// Perform test setup for tidal volume of 325ml with 6.4volt.
 function variableSetupForVolumeTest_325ml_64volt () {
     breatheInTime = 1.7
     breatheOutTime = 1.3
@@ -36,15 +39,7 @@ function variableSetupForVolumeTest_325ml_64volt () {
     breatheOutHold = 0
     breatheCycles = 8
 }
-function variableSetupForVolumeTest_260ml_55volt () {
-    breatheInTime = 1.9
-    breatheOutTime = 1.3
-    breatheInSpeed = 35
-    breatheOutSpeed = 20
-    beatheInHold = 0
-    breatheOutHold = 0
-    breatheCycles = 10
-}
+// Perform test setup to check air pressure using manometer.
 function variableSetupForPressureTest () {
     breatheInTime = 2
     breatheOutTime = 1
@@ -54,6 +49,7 @@ function variableSetupForPressureTest () {
     breatheOutHold = 0
     breatheCycles = 3
 }
+// in normal mode start the device, in setup mode change the RR
 input.onButtonPressed(Button.A, function () {
     if (flagSetupMode == 0) {
         flagEmergencyStop = 0
@@ -67,62 +63,20 @@ input.onButtonPressed(Button.A, function () {
                 break;
             }
         }
+    } else {
+        if (RR_BreathsPerMin >= 20) {
+            RR_BreathsPerMin = 5
+        } else {
+            RR_BreathsPerMin += 1
+        }
+        basic.showNumber(RR_BreathsPerMin)
     }
 })
 function calculateHoldInTime () {
-    time_in_plus_out = breatheInTime + breatheOutTime
     OneBreathTime = 60 / RR_BreathsPerMin
-    return OneBreathTime - time_in_plus_out
+    return OneBreathTime - (breatheInTime + breatheOutTime)
 }
-function variableSetupForWithBagNoLoad () {
-    breatheInTime = 1.7
-    breatheOutTime = 1.3
-    breatheInSpeed = 35
-    breatheOutSpeed = 20
-    breatheCycles = 5
-    beatheInHold = 1
-    breatheOutHold = 0
-}
-input.onButtonPressed(Button.AB, function () {
-    if (flagSetupMode == 0) {
-        flagSetupMode = 1
-        basic.showIcon(IconNames.Square)
-        basic.showIcon(IconNames.SmallSquare)
-        basic.showIcon(IconNames.SmallDiamond)
-        basic.clearScreen()
-    } else {
-        flagSetupMode = 0
-        basic.showIcon(IconNames.SmallDiamond)
-        basic.showIcon(IconNames.SmallSquare)
-        basic.showIcon(IconNames.Square)
-        basic.clearScreen()
-    }
-})
-function beatingHeart (num: number) {
-    for (let index = 0; index < num; index++) {
-        basic.showIcon(IconNames.Heart)
-        basic.pause(100)
-        basic.clearScreen()
-        basic.pause(100)
-    }
-}
-function variableSetupFor260ml () {
-    breatheInTime = 1.9
-    breatheOutTime = 1.3
-    breatheInSpeed = 35
-    breatheOutSpeed = 20
-    beatheInHold = calculateHoldInTime()
-    breatheOutHold = 0
-    breatheCycles = 30
-}
-input.onButtonPressed(Button.B, function () {
-    if (flagSetupMode == 0) {
-        flagEmergencyStop = 1
-        basic.showIcon(IconNames.No)
-        basic.pause(100)
-        basic.clearScreen()
-    }
-})
+// Perform test setup for tidal volume of 130ml with 5.5volt.
 function variableSetupForVolumeTest_130ml_55volt () {
     breatheInTime = 1
     breatheOutTime = 0.8
@@ -132,8 +86,85 @@ function variableSetupForVolumeTest_130ml_55volt () {
     breatheOutHold = 0
     breatheCycles = 20
 }
+// Perform test setup for tidal volume of 260ml with 5.5volt.
+function variableSetupForVolumeTest_260ml_55volt () {
+    breatheInTime = 1.9
+    breatheOutTime = 1.3
+    breatheInSpeed = 35
+    breatheOutSpeed = 20
+    beatheInHold = 0
+    breatheOutHold = 0
+    breatheCycles = 10
+}
+// Perform test setup for bag withour any load.
+function variableSetupForWithBagNoLoad () {
+    breatheInTime = 1.7
+    breatheOutTime = 1.3
+    breatheInSpeed = 35
+    breatheOutSpeed = 20
+    breatheCycles = 5
+    beatheInHold = 1
+    breatheOutHold = 0
+}
+// switch between setup mode and normal mode. Run setup function at the end of setup mode.
+input.onButtonPressed(Button.AB, function () {
+    if (flagSetupMode == 0) {
+        flagSetupMode = 1
+        basic.showIcon(IconNames.Square)
+        basic.showIcon(IconNames.SmallSquare)
+        basic.showIcon(IconNames.SmallDiamond)
+        basic.clearScreen()
+    } else {
+        flagSetupMode = 0
+        if (tidalVolume == 260) {
+            variableSetupFor260ml()
+        } else {
+            variableSetupFor130ml()
+        }
+        basic.showIcon(IconNames.SmallDiamond)
+        basic.showIcon(IconNames.SmallSquare)
+        basic.showIcon(IconNames.Square)
+        basic.clearScreen()
+        basic.showString("Hin=" + beatheInHold)
+    }
+})
+// display a beating heart for number of times
+function beatingHeart (num: number) {
+    for (let index = 0; index < num; index++) {
+        basic.showIcon(IconNames.Heart)
+        basic.pause(100)
+        basic.clearScreen()
+        basic.pause(100)
+    }
+}
+// Perform variable setup for tidal volume of 260ml.
+function variableSetupFor260ml () {
+    breatheInTime = 1.9
+    breatheOutTime = 1.3
+    breatheInSpeed = 35
+    breatheOutSpeed = 20
+    beatheInHold = calculateHoldInTime()
+    breatheOutHold = 0
+    breatheCycles = 30
+}
+// in normal mode stop the device, in setup mode change the TV
+input.onButtonPressed(Button.B, function () {
+    if (flagSetupMode == 0) {
+        flagEmergencyStop = 1
+        basic.showIcon(IconNames.No)
+        basic.pause(100)
+        basic.clearScreen()
+    } else {
+        if (tidalVolume == 130) {
+            tidalVolume = 260
+            basic.showString("TV=260")
+        } else {
+            tidalVolume = 130
+            basic.showString("TV=130")
+        }
+    }
+})
 let OneBreathTime = 0
-let time_in_plus_out = 0
 let breatheCycles = 0
 let breatheOutHold = 0
 let breatheOutTime = 0
@@ -141,11 +172,13 @@ let breatheOutSpeed = 0
 let beatheInHold = 0
 let breatheInTime = 0
 let breatheInSpeed = 0
+let tidalVolume = 0
 let RR_BreathsPerMin = 0
 let flagSetupMode = 0
 let flagEmergencyStop = 0
 flagEmergencyStop = 0
 flagSetupMode = 0
-RR_BreathsPerMin = 20
+RR_BreathsPerMin = 5
+tidalVolume = 130
 beatingHeart(3)
 variableSetupFor130ml()

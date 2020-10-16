@@ -135,7 +135,7 @@ function beatingHeart (num: number) {
 }
 // Perform variable setup for tidal volume of 260ml.
 function variableSetupFor260ml () {
-    breatheInTime = 1.9
+    breatheInTime = 1.5
     breatheOutTime = 1.3
     breatheInSpeed = 35
     breatheOutSpeed = 20
